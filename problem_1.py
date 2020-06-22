@@ -18,6 +18,10 @@ All operations are O(1)
 class LRU_Cache(object):
 
     def __init__(self, capacity):
+
+        if capacity < 1:
+            raise ValueError("Capacity must be a natural number")
+
         self.main = dict()
         self.keys = dict()
 
@@ -90,7 +94,7 @@ def test_LRU_Cache():
     cache.set(5, 5)
     cache.set(6, 6)
 
-    assert(cache.get(1) == 1.5) # 1 should not be removed since we re-set it
+    assert(cache.get(1) == 1.5) # 1 should not be removed since we have recently re-set it
     assert(cache.get("2") == -1) # 2 should be the oldest, thus removed
     assert(cache.get(3) == 3) # 3 should not be removed
 
