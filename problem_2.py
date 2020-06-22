@@ -33,4 +33,5 @@ def test_find_files():
     assert(find_files(".c", "./testdir_p_2") == ['./testdir_p_2/subdir1/a.c', './testdir_p_2/subdir3/subsubdir1/b.c', './testdir_p_2/subdir5/a.c', './testdir_p_2/t1.c'])
     assert(find_files(".gitkeep", "./testdir_p_2") == ['./testdir_p_2/subdir2/.gitkeep', './testdir_p_2/subdir4/.gitkeep'])
 
-test_find_files()
+if __name__ == "__main__":
+    test_find_files()

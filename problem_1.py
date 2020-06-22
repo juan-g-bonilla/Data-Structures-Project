@@ -101,4 +101,5 @@ def test_LRU_Cache():
     assert(len(cache.main) == 5)
     assert(len(cache.keys) == 5)
 
-test_LRU_Cache()
+if __name__ == "__main__":
+    test_LRU_Cache()
