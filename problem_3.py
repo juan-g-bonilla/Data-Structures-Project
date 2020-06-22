@@ -25,9 +25,8 @@ class SortedQueue:
             return self.list.pop() if returnPriority else self.list.pop()[0]
 
         # First entry in list (appart from 0 entry) is lowest priority
-        sol = self.list[1][0]
-        priority = self.list[1][1]
-
+        sol, priority = self.list[1]
+        
         # Re order tree
         self.list[1] = self.list.pop() # Place last entry in front
         ind = 1
@@ -49,7 +48,7 @@ class SortedQueue:
 
             ind = ind2
 
-        return sol, priority if returnPriority else sol
+        return (sol, priority) if returnPriority else sol
 
     def __len__(self):
         return len(self.list)-1
