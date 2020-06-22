@@ -10,8 +10,10 @@ class Node:
 class LinkedList:
     def __init__(self, initial = []):
         self.head = None
-        for i in initial:
-            self.append(i)
+
+        if initial is not None:
+            for i in initial:
+                self.append(i)
 
     def __str__(self):
         cur_head = self.head
@@ -133,17 +135,18 @@ def test_union_and_intersection():
     # Test Case 3:
     [],[], # (input_for_list1, input_for_list2,
     [],[]  # union_solution, intersection_sol)
+    ),(
+    # Test Case 4:
+    None,None, # (input_for_list1, input_for_list2,
+    [],[]  # union_solution, intersection_sol)
     )
 
-    for i,case in enumerate(test_cases):
+    for case in test_cases:
         linked_list_1 = LinkedList(case[0])
         linked_list_2 = LinkedList(case[1])
 
-        print(union(linked_list_1,linked_list_2))
-        print(intersection(linked_list_1,linked_list_2))
         assert (union(linked_list_1,linked_list_2) == LinkedList(case[2]))
         assert (intersection(linked_list_1,linked_list_2) == LinkedList(case[3]))
-        print(i)
 
 if __name__ == "__main__":
     test_union_and_intersection()
