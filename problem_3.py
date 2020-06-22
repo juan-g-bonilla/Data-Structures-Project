@@ -100,5 +100,36 @@ def test_create_huffman():
     assert(root.right.left == "A")
     assert(root.right.right == "C")
 
+def get_huffman_codes(root, prevCode = ""):
+
+    dic = dict()
+
+    for node, i in ((root.left, "0"), (root.right, "1")):
+        newCode = prevCode + i
+        if isinstance(node, BiNode):
+            dic = {**dic, **get_huffman_codes(node, newCode)}
+        else:
+            dic[node] = newCode
+
+    return dic
+
+def test_get_huffman_codes():
+    q = SortedQueue()
+
+    q.enqueue("D", 2)
+    q.enqueue("B", 3)
+    q.enqueue("E", 6)
+    q.enqueue("A", 7)
+    q.enqueue("C", 7)
+
+    root = create_huffman(q)
+
+    dic = get_huffman_codes(root)
+
+    for i, j in (("D", "000"), ("B", "001"), ("E","01"),("A", "10"), ("C", "11")):
+        assert(dic[i] == j)
+    
+
 test_sorted_queue()
 test_create_huffman()
+test_get_huffman_codes()
