@@ -69,5 +69,36 @@ class BiNode:
     def __init__(self):
         self.left = None
         self.right = None
-       
+
+def create_huffman(queue):
+    
+    if len(queue) == 0:
+        return None
+
+    while len(queue) > 1:
+        node = BiNode()
+        node.left, leftPrior = queue.dequeue(True)
+        node.right, rightPrior = queue.dequeue(True)
+        queue.enqueue(node, leftPrior + rightPrior)
+
+    return queue.dequeue()
+    
+def test_create_huffman():
+    q = SortedQueue()
+
+    q.enqueue("D", 2)
+    q.enqueue("B", 3)
+    q.enqueue("E", 6)
+    q.enqueue("A", 7)
+    q.enqueue("C", 7)
+
+    root = create_huffman(q)
+
+    assert(root.left.left.left == "D")
+    assert(root.left.left.right == "B")
+    assert(root.left.right == "E")
+    assert(root.right.left == "A")
+    assert(root.right.right == "C")
+
 test_sorted_queue()
+test_create_huffman()
