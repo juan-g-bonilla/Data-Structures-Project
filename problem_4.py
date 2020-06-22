@@ -52,3 +52,5 @@ if __name__ == "__main__":
     assert(parent.is_user_in_group("child_user"))
     assert(parent.is_user_in_group("sub_child_user"))
     assert(not parent.is_user_in_group("intruder"))
+    assert(not parent.is_user_in_group(""))
+    assert(not parent.is_user_in_group(None))
