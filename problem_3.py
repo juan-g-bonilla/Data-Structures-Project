@@ -104,6 +104,10 @@ def huffman_encoding(data):
     Returns a binary number (in a string format) and the root of the Huffman
     tree in order to decode the binary number
     """
+    # Data that is too small breaks the algorithm, but is not worth to cover
+    # these edge cases since encoding is useful for larger amounts of data
+    if data is None or len(data) < 2:
+        return None, None
 
     appearances = dict()
     for c in data:
@@ -126,6 +130,9 @@ def huffman_decoding(dataStr, data):
     """
     Returns the data encoded in dataStr
     """
+    if None in (dataStr, data):
+        return None
+
     codes = get_huffman_codes(data)
     codes_inv = {v: k for k, v in codes.items()}
 
@@ -185,10 +192,11 @@ def test_get_huffman_codes():
         assert(dic[i] == j)
 
 def test_huffman_encoding():
-    test_cases = ("IYFVLUIYV1aH", "ABC", "IA")
+    test_cases = ("IYFVLU.*3ETRHIOUBGEOIHSOIEFHPIIONBIYV1aH", "A", "", None)
+    test_sols = ("IYFVLU.*3ETRHIOUBGEOIHSOIEFHPIIONBIYV1aH", None, None, None)
 
-    for i in test_cases:
-        assert(i == huffman_decoding(*huffman_encoding(i)))
+    for i, j  in zip(test_cases, test_sols):
+        assert(j == huffman_decoding(*huffman_encoding(i)))
 
 def test_methods():
     test_sorted_queue()
