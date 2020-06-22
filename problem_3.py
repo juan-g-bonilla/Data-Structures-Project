@@ -16,7 +16,7 @@ class SortedQueue:
                 self.list[ind], self.list[ind//2] = self.list[ind//2], self.list[ind]
             ind = ind // 2
 
-    def dequeue(self):
+    def dequeue(self, returnPriority = False):
 
         if len(self.list) == 1:
             return None
@@ -26,6 +26,7 @@ class SortedQueue:
 
         # First entry in list (appart from 0 entry) is lowest priority
         sol = self.list[1][0]
+        priority = self.list[1][1]
 
         # Re order tree
         self.list[1] = self.list.pop() # Place last entry in front
@@ -48,7 +49,10 @@ class SortedQueue:
 
             ind = ind2
 
-        return sol
+        if returnPriority:
+            return sol, priority
+        else:
+            return sol
 
     def __sizeof__(self):
         return len(self.list)-1
@@ -69,5 +73,5 @@ class BiNode:
     def __init__(self):
         self.left = None
         self.right = None
-
+       
 test_sorted_queue()
