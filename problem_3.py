@@ -10,6 +10,9 @@ class SortedQueue:
         self.list = [(None, 0)]
 
     def enqueue(self, value, priority):
+        """
+        Place a value in the queue
+        """
         ind = len(self.list)
         self.list.append((value, priority))
 
@@ -19,7 +22,12 @@ class SortedQueue:
             ind = ind // 2
 
     def dequeue(self, returnPriority = False):
-
+        """
+        Returns the entry with the lowest priority in the queue, and said
+        entry is removed.
+        Additionally, if returnPriority is set to True, a second value is
+        returned with the priority of the returned value
+        """
         if len(self.list) == 1:
             return None, None if returnPriority else None
 
@@ -61,7 +69,10 @@ class BiNode:
         self.right = None
 
 def create_huffman(queue):
-    
+    """
+    Returns a BiNode that is the root of a Huffman tree created from
+    a SortedQueue (queue)
+    """
     if len(queue) == 0:
         return None
 
@@ -74,7 +85,9 @@ def create_huffman(queue):
     return queue.dequeue()
 
 def get_huffman_codes(root, prevCode = ""):
-
+    """
+    Returns a dictionary with the Huffman code of each character
+    """
     dic = dict()
 
     for node, i in ((root.left, "0"), (root.right, "1")):
@@ -87,6 +100,10 @@ def get_huffman_codes(root, prevCode = ""):
     return dic
     
 def huffman_encoding(data):
+    """
+    Returns a binary number (in a string format) and the root of the Huffman
+    tree in order to decode the binary number
+    """
 
     appearances = dict()
     for c in data:
@@ -106,7 +123,9 @@ def huffman_encoding(data):
     return dataStr, root
 
 def huffman_decoding(dataStr, data):
-
+    """
+    Returns the data encoded in dataStr
+    """
     codes = get_huffman_codes(data)
     codes_inv = {v: k for k, v in codes.items()}
 
