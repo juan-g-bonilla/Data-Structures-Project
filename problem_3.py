@@ -50,6 +50,9 @@ class SortedQueue:
 
         return sol
 
+    def __sizeof__(self):
+        return len(self.list)-1
+
 def test_sorted_queue():
     q = SortedQueue()
 
