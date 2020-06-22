@@ -52,7 +52,7 @@ class SortedQueue:
 
     def __sizeof__(self):
         return len(self.list)-1
-
+        
 def test_sorted_queue():
     q = SortedQueue()
 
@@ -65,4 +65,9 @@ def test_sorted_queue():
     for value in test_ordered:
         assert(q.dequeue() == value)
     
+class BiNode:
+    def __init__(self):
+        self.left = None
+        self.right = None
+
 test_sorted_queue()
