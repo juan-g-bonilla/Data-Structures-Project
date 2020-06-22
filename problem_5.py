@@ -12,7 +12,7 @@ class Block(object):
     def hash(self):
       sha = hashlib.sha256()
 
-      hash_str = self.data.encode('utf-8')
+      hash_str = ("" if self.data is None else self.data).encode('utf-8')
 
       sha.update(hash_str)
 
@@ -51,16 +51,23 @@ class BlockChain(object):
 def test_block_chain():
     chain = BlockChain()
 
+    assert(chain.checkValidity())
+
     chain.appendBlock("Hello")
     chain.appendBlock("My name is Iñigo Montoya")
     chain.appendBlock("You killed my father")
     chain.appendBlock("Prepare to die")
+    chain.appendBlock(None)
+    chain.appendBlock("")
 
     assert(chain.genesis.next.next.data == "You killed my father")
     assert(chain.checkValidity())
 
     chain.genesis.next.data = "My name is Domingo Montoya"
     assert(not chain.checkValidity())
+
+    chain.genesis.next.data = "My name is Iñigo Montoya"
+    assert(chain.checkValidity())
 
 
 if __name__ == "__main__":
