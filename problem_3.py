@@ -129,7 +129,48 @@ def test_get_huffman_codes():
     for i, j in (("D", "000"), ("B", "001"), ("E","01"),("A", "10"), ("C", "11")):
         assert(dic[i] == j)
     
+def huffman_encoding(data):
+
+    appearances = dict()
+    for c in data:
+        appearances[c] = appearances.get(c, 0) + 1
+
+    queue = SortedQueue()
+    for i, j in appearances.items():
+        queue.enqueue(i, j)
+
+    root = create_huffman(queue)
+
+    dataStr = ""
+    codes = get_huffman_codes(root)
+    for c in data:
+        dataStr = dataStr + codes[c]
+
+    return dataStr, root
+
+def huffman_decoding(dataStr, data):
+
+    codes = get_huffman_codes(data)
+    codes_inv = {v: k for k, v in codes.items()}
+
+    result = ""
+    buffer = ""
+    for i in dataStr:
+        buffer += i
+        if buffer in codes_inv:
+            result += codes_inv[buffer]
+            buffer = ""
+    
+    return result
+
+
+def test_huffman_encoding():
+    test_cases = ("IYFVLUIYV1aH", "ABC", "IA")
+
+    for i in test_cases:
+        assert(i == huffman_decoding(*huffman_encoding(i)))
 
 test_sorted_queue()
 test_create_huffman()
 test_get_huffman_codes()
+test_huffman_encoding()
