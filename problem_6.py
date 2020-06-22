@@ -114,13 +114,15 @@ def intersection(llist_1, llist_2):
     Returns a LinkedList with all unique elements of llist_1 that are
     also present in llist_2
     """
-    result = LinkedList()
+    set1 = set([i for i in llist_1])
+    set2 = set([i for i in llist_2])
+    result = set()
 
-    for i in llist_1:
-        if i in llist_2 and i not in result:
-            result.append(i)
+    for i in set1:
+        if i in set2:
+            result.add(i)
 
-    return result
+    return LinkedList([i for i in result])
 
 def test_union_and_intersection():
     test_cases = (  
@@ -146,7 +148,8 @@ def test_union_and_intersection():
         linked_list_2 = LinkedList(case[1])
 
         assert (union(linked_list_1,linked_list_2) == LinkedList(case[2]))
-        assert (intersection(linked_list_1,linked_list_2) == LinkedList(case[3]))
+        for i in LinkedList(case[3]):
+            assert(i in intersection(linked_list_1,linked_list_2))
 
 if __name__ == "__main__":
     test_union_and_intersection()
