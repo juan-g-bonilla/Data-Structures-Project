@@ -30,7 +30,7 @@ class LinkedList:
             value (): value to append. If node is passed, the node is appended, 
             else a node is created to contain the value
         """
-        toAppend = value if isinstance(value, Node) else Node(value)
+        toAppend = None if value is None else value if isinstance(value, Node) else Node(value)
 
         if self.head is None:
             self.head = toAppend
@@ -121,21 +121,29 @@ def intersection(llist_1, llist_2):
     return result
 
 def test_union_and_intersection():
-    # Test case 1
+    test_cases = (  
+    # Test Case 1: 
+    [3,2,4,35,6,65,6,4,3,21], [6,32,4,9,6,1,11,21,1],         # (input_for_list1, input_for_list2,
+    [3,2,4,35,6,65,6,4,3,21,6,32,4,9,6,1,11,21,1], [4, 6, 21] # union_solution, intersection_sol)
+    ),(
+    # Test Case 2:
+    [3,2,4,35,6,65,6,4,3,23], [1,7,8,9,11,21,1], # (input_for_list1, input_for_list2,
+    [3,2,4,35,6,65,6,4,3,23,1,7,8,9,11,21,1], [] # union_solution, intersection_sol)
+    ),(
+    # Test Case 3:
+    [],[], # (input_for_list1, input_for_list2,
+    [],[]  # union_solution, intersection_sol)
+    )
 
-    linked_list_1 = LinkedList([3,2,4,35,6,65,6,4,3,21])
-    linked_list_2 = LinkedList([6,32,4,9,6,1,11,21,1])
+    for i,case in enumerate(test_cases):
+        linked_list_1 = LinkedList(case[0])
+        linked_list_2 = LinkedList(case[1])
 
-    assert (union(linked_list_1,linked_list_2) == LinkedList([3,2,4,35,6,65,6,4,3,21] + [6,32,4,9,6,1,11,21,1]))
-    assert (intersection(linked_list_1,linked_list_2) == LinkedList([4, 6, 21]))
-
-    # Test case 2
-
-    linked_list_3 = LinkedList([3,2,4,35,6,65,6,4,3,23])
-    linked_list_4 = LinkedList([1,7,8,9,11,21,1])
-
-    assert (union(linked_list_3,linked_list_4) == LinkedList([3,2,4,35,6,65,6,4,3,23] + [1,7,8,9,11,21,1]))
-    assert (intersection(linked_list_3,linked_list_4) == LinkedList([]))
+        print(union(linked_list_1,linked_list_2))
+        print(intersection(linked_list_1,linked_list_2))
+        assert (union(linked_list_1,linked_list_2) == LinkedList(case[2]))
+        assert (intersection(linked_list_1,linked_list_2) == LinkedList(case[3]))
+        print(i)
 
 if __name__ == "__main__":
     test_union_and_intersection()
