@@ -16,6 +16,8 @@ def find_files(suffix, path):
     Returns:
        a list of paths
     """
+    if None in (suffix, path) or "" in (suffix, path):
+        return None
 
     sol = []
     for fil in os.listdir(path):
@@ -32,6 +34,9 @@ def test_find_files():
 
     assert(find_files(".c", "./testdir_p_2") == ['./testdir_p_2/subdir1/a.c', './testdir_p_2/subdir3/subsubdir1/b.c', './testdir_p_2/subdir5/a.c', './testdir_p_2/t1.c'])
     assert(find_files(".gitkeep", "./testdir_p_2") == ['./testdir_p_2/subdir2/.gitkeep', './testdir_p_2/subdir4/.gitkeep'])
+    assert(find_files("", "./testdir_p_2") == None)
+    assert(find_files(".c", "") == None)
+    assert(find_files(None, "") == None)
 
 if __name__ == "__main__":
     test_find_files()
