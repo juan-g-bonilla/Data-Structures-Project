@@ -52,18 +52,6 @@ class SortedQueue:
 
     def __len__(self):
         return len(self.list)-1
-        
-def test_sorted_queue():
-    q = SortedQueue()
-
-    test_entries = (("E", 12), ("A", 1), ("D", 10), ("C", 5), ("B", 2))
-    test_ordered = ("A", "B", "C", "D", "E")
-
-    for value, priority in test_entries:
-        q.enqueue(value, priority)
-    
-    for value in test_ordered:
-        assert(q.dequeue() == value)
     
 class BiNode:
     def __init__(self):
@@ -82,23 +70,6 @@ def create_huffman(queue):
         queue.enqueue(node, leftPrior + rightPrior)
 
     return queue.dequeue()
-    
-def test_create_huffman():
-    q = SortedQueue()
-
-    q.enqueue("D", 2)
-    q.enqueue("B", 3)
-    q.enqueue("E", 6)
-    q.enqueue("A", 7)
-    q.enqueue("C", 7)
-
-    root = create_huffman(q)
-
-    assert(root.left.left.left == "D")
-    assert(root.left.left.right == "B")
-    assert(root.left.right == "E")
-    assert(root.right.left == "A")
-    assert(root.right.right == "C")
 
 def get_huffman_codes(root, prevCode = ""):
 
@@ -112,22 +83,6 @@ def get_huffman_codes(root, prevCode = ""):
             dic[node] = newCode
 
     return dic
-
-def test_get_huffman_codes():
-    q = SortedQueue()
-
-    q.enqueue("D", 2)
-    q.enqueue("B", 3)
-    q.enqueue("E", 6)
-    q.enqueue("A", 7)
-    q.enqueue("C", 7)
-
-    root = create_huffman(q)
-
-    dic = get_huffman_codes(root)
-
-    for i, j in (("D", "000"), ("B", "001"), ("E","01"),("A", "10"), ("C", "11")):
-        assert(dic[i] == j)
     
 def huffman_encoding(data):
 
@@ -163,6 +118,50 @@ def huffman_decoding(dataStr, data):
     
     return result
 
+def test_sorted_queue():
+    q = SortedQueue()
+
+    test_entries = (("E", 12), ("A", 1), ("D", 10), ("C", 5), ("B", 2))
+    test_ordered = ("A", "B", "C", "D", "E")
+
+    for value, priority in test_entries:
+        q.enqueue(value, priority)
+    
+    for value in test_ordered:
+        assert(q.dequeue() == value)
+
+def test_create_huffman():
+    q = SortedQueue()
+
+    q.enqueue("D", 2)
+    q.enqueue("B", 3)
+    q.enqueue("E", 6)
+    q.enqueue("A", 7)
+    q.enqueue("C", 7)
+
+    root = create_huffman(q)
+
+    assert(root.left.left.left == "D")
+    assert(root.left.left.right == "B")
+    assert(root.left.right == "E")
+    assert(root.right.left == "A")
+    assert(root.right.right == "C")
+
+def test_get_huffman_codes():
+    q = SortedQueue()
+
+    q.enqueue("D", 2)
+    q.enqueue("B", 3)
+    q.enqueue("E", 6)
+    q.enqueue("A", 7)
+    q.enqueue("C", 7)
+
+    root = create_huffman(q)
+
+    dic = get_huffman_codes(root)
+
+    for i, j in (("D", "000"), ("B", "001"), ("E","01"),("A", "10"), ("C", "11")):
+        assert(dic[i] == j)
 
 def test_huffman_encoding():
     test_cases = ("IYFVLUIYV1aH", "ABC", "IA")
@@ -170,7 +169,10 @@ def test_huffman_encoding():
     for i in test_cases:
         assert(i == huffman_decoding(*huffman_encoding(i)))
 
-test_sorted_queue()
-test_create_huffman()
-test_get_huffman_codes()
-test_huffman_encoding()
+def test_methods():
+    test_sorted_queue()
+    test_create_huffman()
+    test_get_huffman_codes()
+    test_huffman_encoding()
+
+test_methods()
