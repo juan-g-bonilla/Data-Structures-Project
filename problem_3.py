@@ -19,10 +19,10 @@ class SortedQueue:
     def dequeue(self, returnPriority = False):
 
         if len(self.list) == 1:
-            return None
+            return None, None if returnPriority else None
 
         if len(self.list) == 2:
-            return self.list.pop()[0]
+            return self.list.pop() if returnPriority else self.list.pop()[0]
 
         # First entry in list (appart from 0 entry) is lowest priority
         sol = self.list[1][0]
@@ -49,10 +49,7 @@ class SortedQueue:
 
             ind = ind2
 
-        if returnPriority:
-            return sol, priority
-        else:
-            return sol
+        return sol, priority if returnPriority else sol
 
     def __len__(self):
         return len(self.list)-1
