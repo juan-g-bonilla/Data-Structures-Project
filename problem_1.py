@@ -19,7 +19,7 @@ class LRU_Cache(object):
 
     def __init__(self, capacity):
 
-        if capacity < 1:
+        if capacity is None or capacity < 1:
             raise ValueError("Capacity must be a natural number")
 
         self.main = dict()
@@ -80,7 +80,15 @@ class LRU_Cache(object):
                 del self.main[self.tail.value]
                 self.tail.prev.next = None
                 self.tail = self.tail.prev
-        
+
+def assertThrowsValueError(capacity):
+    try:
+        LRU_Cache(capacity)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("LRU_Cache should have thrown ValueError")
+
 def test_LRU_Cache():
     cache = LRU_Cache(5)
 
@@ -104,6 +112,10 @@ def test_LRU_Cache():
 
     assert(len(cache.main) == 5)
     assert(len(cache.keys) == 5)
+
+    assertThrowsValueError(0)
+    assertThrowsValueError(-10)
+    assertThrowsValueError(None)
 
 if __name__ == "__main__":
     test_LRU_Cache()
