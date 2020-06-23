@@ -12,7 +12,7 @@ class Block(object):
     def hash(self):
       sha = hashlib.sha256()
 
-      hash_str = ("" if self.data is None else self.data).encode('utf-8')
+      hash_str = (str(self.timestamp) + str(self.data)).encode('utf-8')
 
       sha.update(hash_str)
 
@@ -69,6 +69,8 @@ def test_block_chain():
     chain.genesis.next.data = "My name is Iñigo Montoya"
     assert(chain.checkValidity())
 
+    chain.genesis.next.timestamp = datetime.datetime.fromordinal(1)
+    assert(not chain.checkValidity())
 
 if __name__ == "__main__":
     test_block_chain()
